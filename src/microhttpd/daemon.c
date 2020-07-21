@@ -1244,8 +1244,10 @@ call_handlers (struct MHD_Connection *con,
      immediately.
      As writeability of socket was not checked and it may have
      some data pending in system buffers, use this optimization
-     only for non-blocking sockets. *//* No need to check 'ret' as connection is always in
-   * MHD_CONNECTION_CLOSED state if 'ret' is equal 'MHD_NO'. */else if (on_fasttrack && con->sk_nonblck)
+     only for non-blocking sockets. */
+  /* No need to check 'ret' as connection is always in
+   * MHD_CONNECTION_CLOSED state if 'ret' is equal 'MHD_NO'. */
+  else if (on_fasttrack && con->sk_nonblck)
   {
     if (MHD_CONNECTION_HEADERS_SENDING == con->state)
     {
@@ -6187,8 +6189,8 @@ MHD_start_daemon_va (unsigned int flags,
 
     if (0 != (*pflags & MHD_USE_IPv6))
     {
-#ifdef IPPROTO_IPV6
-#ifdef IPV6_V6ONLY
+#if IPPROTO_IPV6
+#if IPV6_V6ONLY
       /* Note: "IPV6_V6ONLY" is declared by Windows Vista ff., see "IPPROTO_IPV6 Socket Options"
          (http://msdn.microsoft.com/en-us/library/ms738574%28v=VS.85%29.aspx);
          and may also be missing on older POSIX systems; good luck if you have any of those,
@@ -6309,7 +6311,7 @@ MHD_start_daemon_va (unsigned int flags,
           daemon->port = ntohs (s4->sin_port);
           break;
         }
-#ifdef HAVE_INET6
+#if HAVE_INET6
       case AF_INET6:
         {
           struct sockaddr_in6 *s6 = (struct sockaddr_in6 *) &bindaddr;
@@ -6319,7 +6321,7 @@ MHD_start_daemon_va (unsigned int flags,
           break;
         }
 #endif /* HAVE_INET6 */
-#ifdef AF_UNIX
+#if AF_UNIX
       case AF_UNIX:
         daemon->port = 0;     /* special value for UNIX domain sockets */
         break;
@@ -6335,8 +6337,8 @@ MHD_start_daemon_va (unsigned int flags,
     }
   }
 #endif /* HAVE_GETSOCKNAME */
-  if ( (MHD_INVALID_SOCKET != listen_fd) &&
-       (! MHD_socket_nonblocking_ (listen_fd)) )
+  if ( (MHD_INVALID_SOCKET != listen_fd) /* &&
+       (! MHD_socket_nonblocking_ (listen_fd)) */ )
   {
 #ifdef HAVE_MESSAGES
     MHD_DLOG (daemon,

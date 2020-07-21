@@ -318,12 +318,11 @@ MHD_send_on_connection_ (struct MHD_Connection *connection,
     ret = send (s,
                 buffer,
                 buffer_size,
-                MAYBE_MSG_NOSIGNAL | (want_cork ? MSG_MORE : 0));
+                (want_cork ? MSG_MORE : 0));
 #else
     ret = send (connection->socket_fd,
                 buffer,
-                buffer_size,
-                MAYBE_MSG_NOSIGNAL);
+                buffer_size, 0);
 #endif
 
     if (0 > ret)
@@ -422,7 +421,7 @@ MHD_send_on_connection2_ (struct MHD_Connection *connection,
     msg.msg_iov = vector;
     msg.msg_iovlen = 2;
 
-    ret = sendmsg (s, &msg, MAYBE_MSG_NOSIGNAL);
+    ret = sendmsg (s, &msg, 0);
   }
 #elif HAVE_WRITEV
   {

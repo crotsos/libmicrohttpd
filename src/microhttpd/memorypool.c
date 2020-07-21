@@ -48,6 +48,7 @@
 #if defined(MAP_ANON) && ! defined(MAP_ANONYMOUS)
 #define MAP_ANONYMOUS MAP_ANON
 #endif
+#undef MAP_ANONYMOUS
 #if defined(_WIN32)
 #define MAP_FAILED NULL
 #elif ! defined(MAP_FAILED)

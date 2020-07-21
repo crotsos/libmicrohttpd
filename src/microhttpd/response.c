@@ -469,7 +469,7 @@ file_reader (void *cls,
   if (max > SSIZE_MAX)
     max = SSIZE_MAX; /* Clamp to maximum return value. */
 
-#if defined(HAVE_PREAD64)
+#if defined(HAVE_PREAD64) && HAVE_PREAD64
   n = pread64 (response->fd, buf, max, offset64);
 #elif defined(HAVE_PREAD)
   if ( (sizeof(off_t) < sizeof (uint64_t)) &&

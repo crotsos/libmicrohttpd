@@ -281,9 +281,9 @@ typedef SOCKET MHD_socket;
  * non-null.  Todo: port to non-gcc platforms.
  */
 #if defined(__CYGWIN__) || defined(_WIN32) || defined(MHD_W32LIB)
-#define MHD_NONNULL(...) /* empty */
+#define MHD_NONNULL(x) /* empty */
 #else
-#define MHD_NONNULL(...) __THROW __nonnull ((__VA_ARGS__))
+#define MHD_NONNULL(x) __THROW __nonnull (x)
 #endif
 
 /**
@@ -1606,7 +1606,10 @@ MHD_daemon_get_fdset (struct MHD_Daemon *daemon,
                       fd_set *write_fd_set,
                       fd_set *except_fd_set,
                       MHD_socket *max_fd)
-MHD_NONNULL (1,2,3,4);
+MHD_NONNULL (1)
+MHD_NONNULL(2)
+MHD_NONNULL(3)
+MHD_NONNULL(4);
 
 
 /**
@@ -1643,8 +1646,10 @@ MHD_daemon_get_fdset2 (struct MHD_Daemon *daemon,
                        fd_set *except_fd_set,
                        MHD_socket *max_fd,
                        unsigned int fd_setsize)
-MHD_NONNULL (1,2,3,4);
-
+MHD_NONNULL (1)
+MHD_NONNULL (2)
+MHD_NONNULL (3)
+MHD_NONNULL (4);
 
 /**
  * Obtain the `select()` sets for this daemon.  Daemon's FDs will be
@@ -1696,7 +1701,9 @@ MHD_NONNULL (1,2,3,4);
 _MHD_EXTERN enum MHD_StatusCode
 MHD_daemon_get_timeout (struct MHD_Daemon *daemon,
                         MHD_UNSIGNED_LONG_LONG *timeout)
-MHD_NONNULL (1,2);
+MHD_NONNULL (1)
+MHD_NONNULL (2);
+
 
 
 /**
@@ -1749,8 +1756,10 @@ MHD_daemon_run_from_select (struct MHD_Daemon *daemon,
                             const fd_set *read_fd_set,
                             const fd_set *write_fd_set,
                             const fd_set *except_fd_set)
-MHD_NONNULL (1,2,3,4);
-
+MHD_NONNULL (1)
+MHD_NONNULL (2)
+MHD_NONNULL (3)
+MHD_NONNULL (4);
 
 /* ********************* daemon options ************** */
 
@@ -2172,7 +2181,9 @@ MHD_daemon_tls_key_and_cert_from_memory (struct MHD_Daemon *daemon,
                                          const char *mem_key,
                                          const char *mem_cert,
                                          const char *pass)
-MHD_NONNULL (1,2,3);
+MHD_NONNULL (1)
+MHD_NONNULL (2)
+MHD_NONNULL (3);
 
 
 /**
@@ -2576,7 +2587,8 @@ _MHD_EXTERN void
 MHD_daemon_digest_auth_random (struct MHD_Daemon *daemon,
                                size_t buf_size,
                                const void *buf)
-MHD_NONNULL (1,3);
+MHD_NONNULL (1)
+MHD_NONNULL (3);
 
 
 /**
@@ -2722,7 +2734,9 @@ MHD_request_set_value (struct MHD_Request *request,
                        enum MHD_ValueKind kind,
                        const char *key,
                        const char *value)
-MHD_NONNULL (1,3,4);
+MHD_NONNULL (1)
+MHD_NONNULL (3)
+MHD_NONNULL (4);
 
 
 /**
@@ -3398,8 +3412,9 @@ _MHD_EXTERN enum MHD_Bool
 MHD_response_add_header (struct MHD_Response *response,
                          const char *header,
                          const char *content)
-MHD_NONNULL (1,2,3);
-
+MHD_NONNULL (1)
+MHD_NONNULL (2)
+MHD_NONNULL (3);
 
 /**
  * Add a tailer line to the response.
@@ -3415,7 +3430,10 @@ _MHD_EXTERN enum MHD_Bool
 MHD_response_add_trailer (struct MHD_Response *response,
                           const char *footer,
                           const char *content)
-MHD_NONNULL (1,2,3);
+MHD_NONNULL (1)
+MHD_NONNULL (2)
+MHD_NONNULL (3);
+
 
 
 /**
@@ -3431,7 +3449,10 @@ _MHD_EXTERN enum MHD_Bool
 MHD_response_del_header (struct MHD_Response *response,
                          const char *header,
                          const char *content)
-MHD_NONNULL (1,2,3);
+MHD_NONNULL (1)
+MHD_NONNULL (2)
+MHD_NONNULL (3);
+
 
 
 /**
@@ -3462,7 +3483,9 @@ MHD_NONNULL (1);
 _MHD_EXTERN const char *
 MHD_response_get_header (struct MHD_Response *response,
                          const char *key)
-MHD_NONNULL (1,2);
+MHD_NONNULL (1)
+MHD_NONNULL (2);
+
 
 
 /* ************Upload and PostProcessor functions ********************** */
@@ -3749,7 +3772,9 @@ MHD_connection_get_information_sz (struct MHD_Connection *connection,
                                    enum MHD_ConnectionInformationType info_type,
                                    union MHD_ConnectionInformation *return_value,
                                    size_t return_value_size)
-MHD_NONNULL (1,3);
+MHD_NONNULL (1)
+MHD_NONNULL (3);
+
 
 
 /**
@@ -3863,7 +3888,9 @@ MHD_request_get_information_sz (struct MHD_Request *request,
                                 enum MHD_RequestInformationType info_type,
                                 union MHD_RequestInformation *return_value,
                                 size_t return_value_size)
-MHD_NONNULL (1,3);
+MHD_NONNULL (1)
+MHD_NONNULL (3);
+
 
 
 /**
@@ -3971,7 +3998,8 @@ MHD_daemon_get_information_sz (struct MHD_Daemon *daemon,
                                enum MHD_DaemonInformationType info_type,
                                union MHD_DaemonInformation *return_value,
                                size_t return_value_size)
-MHD_NONNULL (1,3);
+MHD_NONNULL (1)
+MHD_NONNULL (3);
 
 /**
  * Obtain information about the given daemon.
